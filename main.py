@@ -34,10 +34,10 @@ while datetime.now() < END_DATE:
     if response is not None:
         soup = BeautifulSoup(response.text, "html.parser")
         script_tag = soup.find("script", type="application/ld+json")
+
         if script_tag is not None:
             data = json.loads(script_tag.string)
-
-             availability = data["@graph"][0]["offers"]["availability"]
+            availability = data["@graph"][0]["offers"]["availability"]
 
         if availability.endswith("OutOfStock"):
             alert_sent = False  
@@ -46,4 +46,5 @@ while datetime.now() < END_DATE:
             if alert_sent == False:
                 print("Twilio will send text- Next Steps Implementation")
                 alert_sent = True
+                
         time.sleep(60)
